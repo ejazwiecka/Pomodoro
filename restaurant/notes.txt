@@ -1,0 +1,121 @@
+Projet 3W Restaurant
+====================
+
+Objectif
+--------
+
+Construire le site de e-commerce d'un restaurant permettant de réserver en ligne une table et d'acheter (puis se faire livrer) des produits alimentaires.
+
+Le site sert autant aux clients qu'aux salariés du restaurant qui, quand ils se connecteront, pourront suivre les commandes, les réservations, le catalogue de produits alimentaires.
+
+
+Organisation des dossiers et fichiers
+-------------------------------------
+
+/application							Code source de l'application
+	/config								Configuration de l'application
+    	database.php					Configuration base de données (identifiants de connexion)
+    /controllers						Le C de MVC, les chefs d'orchestres de l'application
+    	HomeController.class.php		Contrôleur de la page d'accueil
+    /models								Le M de MVC, le coeur de l'application
+    /www								Le V de MVC, les fichiers statiques (CSS, JS, images, fonts, etc.)
+    	/css							Feuilles de styles CSS
+        /fonts							Polices de caractères
+        /images							Images
+        /js								Code source JavaScript
+        	/classes					Classes (code source orienté objet)
+        HomeView.phtml					Template interne de la page d'accueil
+        LayoutView.phtml				Template global
+/library								Code source générique, réutilisable dans d'autres projets
+	Database.class.php					Classe d'accès à la base de données
+index.php								Code principal
+
+
+
+D'autres dossiers et fichiers vont apparaître au fur et à mesure dans le dossier "application"
+
+
+Liens intéressants
+------------------
+
+- Upload de fichiers en PHP :
+  http://www.php.net/manual/en/features.file-upload.post-method.php
+
+- Veille Intégration HTML/CSS et JavaScript :
+  https://uptodate.frontendrescue.org/
+
+- UX Design :
+  http://www.eyrolles.com/Informatique/Livre/design-d-experience-utilisateur-9782212141764
+
+- Learning PHP, MySQL and JavaScript :
+  http://shop.oreilly.com/product/0636920036463.do
+  http://www.amazon.com/Learning-PHP-MySQL-JavaScript-Javascript/dp/1491918667
+
+- OWASP :
+  https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
+
+- $_SESSION : http://php.net/manual/fr/reserved.variables.session.php http://php.net/manual/fr/ref.session.php
+
+Syntaxes SQL
+------------
+
+UPDATE NomTable
+	SET NomColonne1 = ValeurColonne1, NomColonne2 = ValeurColonne2, ...
+	WHERE Condition
+
+
+DELETE FROM NomTable
+	WHERE Condition
+
+
+   /**** Architecture détaillée *****/
+   
+   
+   /application
+   	/classes
+    	UserSession.class.php
+        UserSessionFilter.class.php
+   
+  	/config
+    	database.php => log base de données
+        library.php => library config setting
+        
+   /controller 
+   	/admin
+    	/meal
+        	MealController.class.php => recupération des données bdd relativent au restaurant : photos, name, description .... et redirctTo
+        
+        /user
+        	UserController.class.php => gestion de la user session + inscription + messages d'erreurs
+    	AdminController.class.php => fonction vide prêtepour V2 creation de l'admin
+        
+   	/basket
+    	BasketController.class.php => verif de la connection on peut pas voir le panier si on est pas connecté, si le paner est vide créer quand même le panier mais vide
+    
+    /booking
+    	BookingController.class.php => verif de la connection on ne peut pas reserver si on est pas connecté + creation de la résa et redirctTo
+       
+    /meal
+    	MealController.class.php => validation de la query + récuperation des info + serialisation et redirctTo
+    
+    /order
+    	/payment
+        	/success => fonction Vide prêt pour plus tard
+        paymentController.class.php => on peut payer une commande sans être connecté + validation de la query recuperartion de la commande, redirect vers la page d'accueil en cas d'erreur, dernière fonction vide elle aurait le code qui implémente un paiement Paypal ou banque et une redirect vers la page succès paiement 
+        
+        /validation
+        	validationController.class.php => verifier la connection, validation de la commande, la commande à tét crée, renvoi du numéro de commande en JSON
+  	Order
+    /user
+    	/login
+        	Login.Controller.class.php => recuperation des données de l'utilsateur en fonction de ses identifiants + Construction de la session utilisateur
+       
+        
+   
+   index.php
+   
+  
+   
+   
+   
+                                
